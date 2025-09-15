@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Study Planner - Organize Your Academic Goals</title>
+    <meta name="description" content="Boost your productivity with Smart Study Planner. Create, track, and manage study goals with visual timelines and progress tracking. Perfect for students looking to improve time management.">
+    <meta name="keywords" content="study planner, academic goals, student productivity, time management, study tracker, educational planning">
+    <meta name="author" content="Smart Study Planner">
+    
+    <meta property="og:title" content="Smart Study Planner - Organize Your Academic Goals">
+    <meta property="og:description" content="Boost your productivity with Smart Study Planner. Create, track, and manage study goals with visual timelines and progress tracking.">
+    <meta property="og:type" content="website">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Smart Study Planner - Organize Your Academic Goals">
+    <meta name="twitter:description" content="Create, track, and manage study goals with visual progress tracking. Perfect for student productivity.">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-info">
+                    <div class="header-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="header-title">Smart Study Planner</h1>
+                        <p class="header-subtitle">Organize your academic goals and boost productivity</p>
+                    </div>
+                </div>
+                <button id="addGoalBtn" class="btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 5v14m-7-7h14"/>
+                    </svg>
+                    Add Goal
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <!-- Add Goal Form -->
+            <div id="addGoalForm" class="add-goal-form hidden">
+                <div class="form-card">
+                    <div class="form-header">
+                        <h2>Add New Study Goal</h2>
+                        <button id="cancelFormBtn" class="btn-ghost">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 6L6 18M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <form id="goalForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="goalTitle">Goal Title *</label>
+                                <input type="text" id="goalTitle" placeholder="e.g., Complete Chapter 5" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="goalSubject">Subject *</label>
+                                <input type="text" id="goalSubject" placeholder="e.g., Mathematics" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="goalDescription">Description</label>
+                            <textarea id="goalDescription" rows="3" placeholder="Describe what you need to accomplish..."></textarea>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="goalDeadline">Deadline *</label>
+                                <input type="date" id="goalDeadline" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="goalPriority">Priority</label>
+                                <select id="goalPriority">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary flex-1">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 5v14m-7-7h14"/>
+                                </svg>
+                                Add Goal
+                            </button>
+                            <button type="button" id="cancelFormBtn2" class="btn-outline">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="tabs">
+                <div class="tab-list">
+                    <button class="tab active" data-tab="dashboard">Dashboard</button>
+                    <button class="tab" data-tab="active">Active Goals</button>
+                    <button class="tab" data-tab="completed">Completed</button>
+                </div>
+
+                <!-- Dashboard Tab -->
+                <div id="dashboard" class="tab-content active">
+                    <div class="dashboard-header">
+                        <h2>Dashboard</h2>
+                        <p>Track your study progress and stay on top of your goals</p>
+                    </div>
+                    <div class="stats-grid" id="statsGrid">
+                        <!-- Stats cards will be populated by JavaScript -->
+                    </div>
+                    <div id="overviewCard" class="overview-card hidden">
+                        <h3>Quick Overview</h3>
+                        <div class="overview-content">
+                            <div class="overview-item">
+                                <span>Average Progress</span>
+                                <span id="averageProgress">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div id="overviewProgressFill" class="progress-fill"></div>
+                            </div>
+                            <div class="overview-summary">
+                                <span id="completedCount">0 completed</span>
+                                <span id="remainingCount">0 remaining</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Goals Tab -->
+                <div id="active" class="tab-content">
+                    <div class="tab-header">
+                        <h2>Active Goals</h2>
+                        <span id="activeCount" class="goal-count">0 goals</span>
+                    </div>
+                    <div id="activeGoalsList" class="goals-list">
+                        <!-- Active goals will be populated by JavaScript -->
+                    </div>
+                    <div id="noActiveGoals" class="empty-state">
+                        <div class="empty-icon">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                            </svg>
+                        </div>
+                        <h3>No active goals yet</h3>
+                        <p>Create your first study goal to get started on your academic journey</p>
+                        <button class="btn-primary" onclick="showAddForm()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 5v14m-7-7h14"/>
+                            </svg>
+                            Add Your First Goal
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Completed Goals Tab -->
+                <div id="completed" class="tab-content">
+                    <div class="tab-header">
+                        <h2>Completed Goals</h2>
+                        <span id="completedGoalsCount" class="goal-count">0 goals</span>
+                    </div>
+                    <div id="completedGoalsList" class="goals-list">
+                        <!-- Completed goals will be populated by JavaScript -->
+                    </div>
+                    <div id="noCompletedGoals" class="empty-state">
+                        <div class="empty-icon success">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                            </svg>
+                        </div>
+                        <h3>No completed goals yet</h3>
+                        <p>Completed goals will appear here. Keep working on your active goals!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="storage.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
